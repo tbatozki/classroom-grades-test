@@ -1,0 +1,38 @@
+doctrine:
+    dbal:
+        dbname:               database
+        host:                 localhost
+        port:                 3306
+        user:                 root
+        password:
+        driver:               pdo_mysql
+        server_version:       '8.0.21'
+        # if the url option is specified, it will override the above config
+        #url:                  mysql://db_user:db_password@127.0.0.1:3306/db_name
+        # the DBAL driverClass option
+        #driver_class:         App\DBAL\MyDatabaseDriver
+        # the DBAL driverOptions option
+        #options:
+        #    foo: bar
+
+        # the DBAL wrapperClass option
+        # wrapper_class:        App\DBAL\MyConnectionWrapper
+        charset:              UTF8
+        logging:              '%kernel.debug%'
+        #platform_service:     App\DBAL\MyDatabasePlatformService
+        # mapping_types:
+        #     enum: string
+        # types:
+        #     custom: App\DBAL\MyCustomType
+        #url: '%env(resolve:DATABASE_URL)%'
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App
