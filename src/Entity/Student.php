@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\StudentRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -15,6 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Student
 {
     /**
+     * @var int The student's id
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -22,26 +25,40 @@ class Student
     private $id;
 
     /**
+     * @var string Student's name
+     *
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $name;
 
     /**
+     * @var string Student's firstname
+     *
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $firstname;
 
     /**
+     * @var \DateTime Student's birthdate
+     *
      * @ORM\Column(type="date")
+     * @Assert\NotBlank
+     * @Assert\DateTime
      */
     private $birthdate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Classroom::class, inversedBy="students", cascade={"persist"})
+     * @var SchoolClass School class the student belongs to
+     *
+     * @ORM\ManyToOne(targetEntity=SchoolClass::class, inversedBy="students", cascade={"persist"})
      */
-    private $classroom;
+    private $schoolClass;
 
     /**
+     * @var ArrayCollection Student's collection of grades
+     *
      * @ORM\OneToMany(targetEntity=Grade::class, mappedBy="student", cascade={"persist"})
      */
     private $grades;
@@ -54,31 +71,31 @@ class Student
         $this->grades = new ArrayCollection();
     }
 
-    /*
-        Gets student's identifier
-
-        @return $id integer
+    /**
+     * Gets student's identifier
+     *
+     * @return int
     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /*
-        Gets student's namespace
-
-        @return $name string
+    /**
+     * Gets student's namespace
+     *
+     * @return string
     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /*
-        Sets student's name
-        @var $name  string
-
-        @return $this
+    /**
+     * Sets student's name
+     * @var $name  string
+     *
+     * @return self
     */
     public function setName(string $name): self
     {
@@ -87,21 +104,21 @@ class Student
         return $this;
     }
 
-    /*
-        Gets student's firstname
-
-        @return $firstname string
+    /**
+     * Gets student's firstname
+     *
+     * @return string
     */
     public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
-    /*
-        Sets student's firstname
-        @var $firstname string
-
-        @return $this
+    /**
+     * Sets student's firstname
+     * @var $firstname string
+     *
+     * @return self
     */
     public function setFirstname(string $firstname): self
     {
@@ -110,22 +127,22 @@ class Student
         return $this;
     }
 
-    /*
-        Gets student's birthdate
-
-        @return $birthdate date
+    /**
+     * Gets student's birthdate
+     *
+     * @return \DateTimeInterface
     */
     public function getBirthdate(): ?\DateTimeInterface
     {
         return $this->birthdate;
     }
 
-/*
-    Set student's birthdate
-    @var $birthdate DateTime
-
-    @return $this
-*/
+    /**
+     * Set student's birthdate
+     * @var $birthdate \DateTimeInterface
+     *
+     * @return self
+    */
     public function setBirthdate(\DateTimeInterface $birthdate): self
     {
         $this->birthdate = $birthdate;
@@ -133,30 +150,32 @@ class Student
         return $this;
     }
 
-    /*
-        Gets student's classroom
-
-        @return $classroom  Classroom
+    /**
+     * Gets student's school class
+     *
+     * @return SchoolClass
     */
-    public function getClassroom(): ?Classroom
+    public function getSchoolClass(): ?SchoolClass
     {
-        return $this->classroom;
+        return $this->schoolClass;
     }
 
-    /*
-        Sets student's classroom
-        @var $classroom Entity
-
-        @return $this
+    /**
+     * Sets student's school class
+     * @var $schoolClass SchoolClass
+     *
+     * @return self
     */
-    public function setClassroom(?Classroom $classroom): self
+    public function setSchoolClass(?SchoolClass $schoolClass): self
     {
-        $this->classroom = $classroom;
+        $this->schoolClass = $schoolClass;
 
         return $this;
     }
 
     /**
+     * Get all student's grades
+     *
      * @return Collection|Grade[]
      */
     public function getGrades(): Collection
@@ -164,11 +183,11 @@ class Student
         return $this->grades;
     }
 
-    /*
-        Adds a new grade to grades collection
-        @var $grade   Entity
-
-        @return $this
+    /**
+     * Adds a new grade to student's grades collection
+     * @var $grade Grade
+     *
+     * @return self
     */
     public function addGrade(Grade $grade): self
     {
@@ -180,11 +199,11 @@ class Student
         return $this;
     }
 
-    /*
-        Removes grade to grades collection
-        @var $grade   Entity
-
-        @return $this
+    /**
+     * Removes grade from student's grades collection
+     * @var $grade Grade
+     *
+     * @return self
     */
     public function removeGrade(Grade $grade): self
     {

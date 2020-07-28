@@ -2,19 +2,22 @@
 
 namespace App\Entity;
 
+use App\Repository\SchoolClassRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\ClassroomRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass=ClassroomRepository::class)
+ * @ORM\Entity(repositoryClass=SchoolClassRepository::class)
  */
-class Classroom
+class SchoolClass
 {
     /**
+     * @var int The school class id
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -22,53 +25,61 @@ class Classroom
     private $id;
 
     /**
+     * @var string The school class label
+     *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
     */
     private $label;
 
     /**
+     * @var string The school class graduation year
+     *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
     private $graduationYear;
 
     /**
-     * @ORM\OneToMany(targetEntity=Student::class, mappedBy="classroom")
+     * @var ArrayCollection The school class students
+     *
+     * @ORM\OneToMany(targetEntity=Student::class, mappedBy="schoolClass")
      */
     private $students;
 
-    /*
-        Class constructor
-    */
+    /**
+     * Class constructor
+     */
     public function __construct()
     {
         $this->students = new ArrayCollection();
     }
 
-    /*
-        Gets the classroom identifier
-
-        @return $id integer
+    /**
+     * Gets the school class identifier
+     *
+     * @return int
     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /*
-        Gets the classroom label
-
-        @return $label string
+    /**
+     * Gets the school class label
+     *
+     * @return string
     */
     public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    /*
-        Sets the classroom label
-        @var $label    string
-
-        @return $this
+    /**
+     * Sets the school class label
+     * @var $label    string
+     *
+     * @return self
     */
     public function setLabel(string $label): self
     {
@@ -77,21 +88,21 @@ class Classroom
         return $this;
     }
 
-    /*
-        Gets the classroom graduation year
-
-        @return $graduationYear string
+    /**
+     * Gets the school class graduation year
+     *
+     * @return string
     */
     public function getGraduationYear(): ?string
     {
         return $this->graduationYear;
     }
 
-    /*
-        Sets the classroom graduation year
-        @var $graduationYear    string
-
-        @return $this
+    /**
+     * Sets the school class graduation year
+     * @var $graduationYear    string
+     *
+     * @return self
     */
     public function setGraduationYear(string $graduationYear): self
     {
@@ -108,11 +119,11 @@ class Classroom
         return $this->students;
     }
 
-    /*
-        Adds a new student to students collection
-        @var $student   Entity
-
-        @return $this
+    /**
+     * Adds a student to school class students collection
+     * @var $student Student
+     *
+     * @return self
     */
     public function addStudent(Student $student): self
     {
@@ -124,11 +135,11 @@ class Classroom
         return $this;
     }
 
-    /*
-        Removes student to students collection
-        @var $student   Entity
-
-        @return $this
+    /**
+     * Removes a student from school class students collection
+     * @var $student Student
+     *
+     * @return self
     */
     public function removeStudent(Student $student): self
     {

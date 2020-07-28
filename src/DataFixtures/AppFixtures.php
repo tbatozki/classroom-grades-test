@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Student;
-use App\Entity\Classroom;
+use App\Entity\SchoolClass;
 use App\Entity\Grade;
 
 class AppFixtures extends Fixture
@@ -15,7 +15,7 @@ class AppFixtures extends Fixture
             'name' => 'Denis',
             'firstname' => 'Alain',
             'birthdate' => '2009-05-12',
-            'classroom' => [
+            'schoolClass' => [
                 'label'             => '6C',
                 'graduationYear'    => '6ème'
             ],
@@ -54,7 +54,7 @@ class AppFixtures extends Fixture
             'name' => 'Robert',
             'firstname' => 'Aline',
             'birthdate' => '2006-03-03',
-            'classroom' => [
+            'schoolClass' => [
                 'label'             => '3G',
                 'graduationYear'    => '3ème'
             ],
@@ -101,7 +101,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         foreach ($this->students as $s) {
-            $student = $this->setStudentData(new Student(), $s);
+            $student = $this->setStudentAttributes(new Student(), $s);
             $manager->persist($student);
         }
 
@@ -115,15 +115,15 @@ class AppFixtures extends Fixture
 
         @return $student    Student
     */
-    private function setStudentData(Student $student, $data) : Student
+    private function setStudentAttributes(Student $student, $data) : Student
     {
         foreach ($data as $key => $value) {
             switch ($key) {
                 case 'birthdate' :
                     $student->setBirthdate(new \DateTime($value));
                     break;
-                case 'classroom':
-                    $student->setClassroom($this->setData($value, new Classroom()));
+                case 'schoolClass':
+                    $student->setSchoolClass($this->setData($value, new SchoolClass()));
                     break;
                 case 'grades':
                     foreach($value as $gradeData) {
