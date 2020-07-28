@@ -37,14 +37,22 @@ class Student
     private $birthdate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Classroom::class, inversedBy="students")
+     * @ORM\ManyToOne(targetEntity=Classroom::class, inversedBy="students", cascade={"persist"})
      */
     private $classroom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Grade::class, mappedBy="student")
+     * @ORM\OneToMany(targetEntity=Grade::class, mappedBy="student", cascade={"persist"})
      */
     private $grades;
+
+    /*
+        Class constructor
+    */
+    public function __construct()
+    {
+        $this->grades = new ArrayCollection();
+    }
 
     /*
         Gets student's identifier
