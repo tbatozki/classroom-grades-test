@@ -1,24 +1,44 @@
 # Documentation d’installation du projet
 
 ```
-git clone [git_repo_url]
-cd [my-project/]
+git clone https://github.com/tbatozki/classroom-grades-test.git
+cd classroom-grades-test
+cd classroom_grades_project
 composer install
 
 php bin/console doctrine:database:create
 php bin/console doctrine:fixtures:load
 ```
 
-starting symfony’s server:  php -S 127.0.0.1:8000 -t public
-
-
-# Documentation concernant l’exercice
+# Documentation concernant l’exercice à réaliser
 
 Pour interroger l’API, plusieurs méthodes sont possibles :
 * Sandbox d'API Platform disponible dans la doc de l’api à l’url suivante : [domain_url]/api
 * Postman
 
 ## Consignes
+
+Exercice : créer une API de notation d'élèves en Symfony
+
+Un élève est caractérisé par :
+* Un nom
+* Un prénom
+* Une date de naissance
+
+Une note est caractérisée par :
+* Une valeur : entre 0 et 20
+* Une matière : Champ texte
+
+L'API devra permettre de :
+* Ajouter un élève
+* Modifier les informations d'un élève (nom, prénom, date de naissance)
+* Supprimer un élève
+* Ajouter une note à un élève
+* Récupérer la moyenne de toutes les notes d'un élève
+* Récupérer la moyenne générale de la classe (moyenne de toutes les notes données)
+
+Une attention particulière sera donnée aux respects des bonnes pratiques de code et de construction des API. Aussi, veuillez nous fournir une documentation précise pour l'utilisation de votre API.
+Merci et bon test !
 
 ### Ajouter un élève
 
@@ -36,7 +56,7 @@ body :
     }
 ```
 
-### Modifier un élève
+### Modifier les informations d'un élève (nom, prénom, date de naissance)
 
 * Exemple de query si l’on souhaite changer plusieurs attributs
 de l'élève (MAJ complète de l'objet)
