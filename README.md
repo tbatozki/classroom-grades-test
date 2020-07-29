@@ -42,6 +42,8 @@ Pour interroger l’API, plusieurs méthodes sont possibles :
 * Sandbox d'API Platform disponible dans la doc de l’api à l’url suivante : [domain_url]/api
 * Postman
 
+NB : Pour faciliter les tests des fixtures ont été ajoutées au projet, c'est pour cette raison qu'à l'installation du projet on load les fixtures avec cette commande php bin/console doctrine:fixtures:load.
+
 ### Ajouter un élève
 
 Exemple de query si l'on souhaite ajouter un élève
