@@ -12,10 +12,6 @@ php bin/console doctrine:fixtures:load
 
 # Documentation concernant l’exercice à réaliser
 
-Pour interroger l’API, plusieurs méthodes sont possibles :
-* Sandbox d'API Platform disponible dans la doc de l’api à l’url suivante : [domain_url]/api
-* Postman
-
 ## Consignes
 
 Exercice : créer une API de notation d'élèves en Symfony
@@ -39,6 +35,12 @@ L'API devra permettre de :
 
 Une attention particulière sera donnée aux respects des bonnes pratiques de code et de construction des API. Aussi, veuillez nous fournir une documentation précise pour l'utilisation de votre API.
 Merci et bon test !
+
+## Comment interroger l'API
+
+Pour interroger l’API, plusieurs méthodes sont possibles :
+* Sandbox d'API Platform disponible dans la doc de l’api à l’url suivante : [domain_url]/api
+* Postman
 
 ### Ajouter un élève
 
